@@ -3,7 +3,7 @@ const fs = require('fs');
 const readline = require('readline');
 
 const { stdin, stdout } = require('process');
-const fileName = 'test.txt';
+const fileName = 'text.txt';
 const text = 'Введите текст!';
 const goodBye = 'До свидания!';
 
