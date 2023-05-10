@@ -5,6 +5,15 @@ const sourcePath = path.resolve(__dirname, 'styles');
 const pathForBundle = path.resolve(__dirname, 'project-dist', 'bundle.css');
 
 function createBundle() {
+
+    fs.access(pathForBundle, function (error) {
+        if (!error) {
+            fs.unlink(pathForBundle, err => {
+                if (err) throw err;
+            });
+        }
+    });
+
     fs.readdir(sourcePath, { withFileTypes: true }, (err, files) => {
 
         files.map((file) => {
@@ -23,5 +32,9 @@ function createBundle() {
     })
 
 }
+
+fs.watch(sourcePath, (event, prev) => {
+    createBundle();
+});
 
 createBundle();
