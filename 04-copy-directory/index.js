@@ -16,20 +16,40 @@ function copyDir() {
         }
     });
 
+    fs.readdir(newFolderPath, { withFileTypes: true }, (err, files) => {
+        if (files) {
+
+            files.map((file) => {
+
+                let copiesPath = path.join(newFolderPath, file.name);
+
+                fs.unlink(copiesPath, err => {
+                    if (err) throw err;
+                });
+            })
+        }
+    });
 
     fs.readdir(sourcePath, { withFileTypes: true }, (err, files) => {
         if (err) throw err;
+
         files.map((file) => {
 
             let currentPath = path.join(sourcePath, file.name);
             let copiesPath = path.join(newFolderPath, file.name);
 
             fs.copyFile(currentPath, copiesPath, err => {
-                if(err) throw err;
+                if (err) throw err;
             });
         })
-        console.log('Файлы успешно скопированы');
+
     });
+
 }
+
+
+fs.watch(sourcePath, (event, prev) => {
+    copyDir();
+});
 
 copyDir();
