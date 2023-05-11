@@ -12,21 +12,13 @@ function readFiles(folderPath) {
       let fileExtension = path.extname(file.name).slice(1);
       let filePath = path.join(folderPath, file.name);
 
-      if (fileName === '') {
-        fileName = 'no name';
-        fileExtension = file.name.slice(1);
-      };
-
       stat(filePath, (err, stats) => {
         if (err) throw err;
 
         if (stats.isFile()) {
           let fileSize = stats.size;
           console.log(`${fileName} - ${fileExtension} - ${fileSize}`);
-        } else {
-          let deepFolderPath = path.join(folderPath, file.name);
-          readFiles(deepFolderPath);
-        }
+        } 
       });
     })
 
